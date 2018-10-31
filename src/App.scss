@@ -40,15 +40,17 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .canvas {
-    width: 500px;
-    height: 500px;
+
     border: 1px solid #E5D4ED;
     box-shadow: $mainBoxShadow;
+    
 
     @media only screen and (min-width: 300px) and (max-width: 800px) {
-        width: 100%;
-        height: auto;
-        border: none
+        max-width: 100%;
+        max-height: auto;
+        border: none;
+        
+
     }
 }
 
@@ -182,6 +184,13 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         border-radius: $smallRadius;
         padding: 0.5em
     }
+    
+    @media only screen and (min-width: 300px) and (max-width: 800px) {
+        max-height: 300px !important;
+        .filters {
+            max-height: 300px !important;
+        }
+    }
 }
 
 /* FILTERCONTAINER STYLES */
@@ -220,6 +229,13 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         background: $secondaryFontColor;
         border-radius: $smallRadius;
     }
+
+    @media only screen and (min-width: 300px) and (max-width: 800px) {
+        max-height: 300px !important;
+        .stickers {
+            max-height: 300px !important;
+        }
+    }
 }
 
 /* MODAL STYLES */
@@ -251,7 +267,7 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
 .modalSave {
     width: 500px !important;
-    height: 500px !important;
+    
     display: flex;
     flex-direction: column;
     img { 
@@ -266,7 +282,10 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     @media only screen and (min-width: 300px) and (max-width: 800px) {
         max-width: 80% !important;
         left: 10%;
-        height:50% !important;
+       
+        img {
+            margin: auto;
+        }
     }
 }
 /* PAINTBRUSH STYLES */

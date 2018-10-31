@@ -7,6 +7,7 @@ import MobileToolbar from './components/mobileToolbar/MobileToolbar';
 import Modal from './components/modal/Modal';
 import { stickers } from './components/stickerContainer/stickerSvgs/';
 import { filters } from './components/filterContainer/';
+import { trimCanvas } from './trimCanvas';
 import './App.scss';
 
 class App extends Component {
@@ -14,8 +15,8 @@ state = {
   mouseX: 0,
   mouseY: 0,
   uploadedImage: null,
-  mainImgWidth: 0,
-  mainImgHeight: 0,
+  mainImgWidth: 500,
+  mainImgHeight: 500,
   selectedSticker: stickers[0],
   stickerSize: 'md',
   selectedFilter: filters[0],
@@ -41,13 +42,12 @@ state = {
    ctx.fillStyle = "rgba(150, 150, 150, 1)"
    ctx.fillText("Choose An Image To Edit", canvasX, canvasY); 
 
-   let pixelsOriginal = ctx.getImageData(0, 0, 500, 500);
+   let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
    const { imageState } = this.state;
    this.setState({imageState: imageState.concat(pixelsOriginal)})
   }
   
   imageUploadHandler = e => {
-    const image = e.target.files[0];
     this.setState({uploadedImage: URL.createObjectURL(e.target.files[0])})
     setTimeout(() => this.uploadMainImg(), 100) 
   }
@@ -55,12 +55,6 @@ state = {
   handleMouseMove = e => {
     //return;
     const canvas = this.refs.canvas;
-      
-    let canvasXbounding = canvas.getBoundingClientRect().x;
-    let canvasYbounding = canvas.getBoundingClientRect().y;
-    let mouseXposition = e.clientX - canvasXbounding;
-    let mouseYposition = e.clientY - canvasYbounding;
-    console.log('X:' + e.nativeEvent.clientX + 'Y:' + e.nativeEvent.clientY)
     
  // FOR MAKING THE PAINTING WORK ON MOBILE
    console.log(e.touches)
@@ -68,6 +62,7 @@ state = {
 
     if(e.touches) {
       const rect = canvas.getBoundingClientRect()
+     
       this.setState({mouseX: e.touches[0].clientX - rect.left, mouseY: e.touches[0].clientY - rect.y})
     }
   }
@@ -92,7 +87,7 @@ state = {
     })
 
     if(paintBrush.paint) {
-      let pixels = ctx.getImageData(0, 0, 500, 500);
+      let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
       ctx.putImageData(pixels, 0, 0);
       const { imageState, activeImageState } = this.state;
       this.setState({imageState: imageState.concat(pixels), activeImageState: activeImageState + 1})
@@ -101,17 +96,17 @@ state = {
 
   setPaintBrushSettings = (e) => {
     const value = e.target.value
-    this.setState((prevState) => {
-      return {
-        paintBrush: {
-          paint: prevState.paintBrush.paint,
-          color: value,
-          width: prevState.paintBrush.width
+    if(e.target.className === "strokeColor") {
+      this.setState((prevState) => {
+        return {
+          paintBrush: {
+            paint: prevState.paintBrush.paint,
+            width: prevState.paintBrush.width,
+            color: value,
+          }
         }
-      }
-    })
-
-    if(e.target.className = "strokeWidth") {
+      })
+    } else if(e.target.className = "strokeWidth") {
       this.setState((prevState) => {
         return {
           paintBrush: {
@@ -122,6 +117,18 @@ state = {
         }
       })
     }
+
+    /* if(e.target.className = "strokeWidth") {
+      this.setState((prevState) => {
+        return {
+          paintBrush: {
+            paint: prevState.paintBrush.paint,
+            color: prevState.paintBrush.color,
+            width: value
+          }
+        }
+      })
+    } */
   }
 
   textSettings = (e) => {
@@ -164,7 +171,7 @@ state = {
       ctx.fillText(bottom, centerX, bottomY)
     } 
     
-    const pixels = ctx.getImageData(0,0,500,500)
+    const pixels = ctx.getImageData(0,0, canvas.width, canvas.height)
     ctx.putImageData(pixels, 0, 0);
     const { imageState, activeImageState } = this.state;
     this.setState({imageState: imageState.concat(pixels), activeImageState: activeImageState + 1})
@@ -189,8 +196,8 @@ state = {
         this.setState({mouseX: mouseXposition, mouseY: mouseYposition})
       } else {
         console.log(e.touches[0])
-        let test = e.touches[0].screenX - e.touches[0].clientX;
-        this.setState({mouseX: e.changedTouches[0].clientX + rect.y , mouseY: e.touches[0].clientY - rect.y})
+        console.log(rect)
+        this.setState({mouseX: e.touches[0].clientX + rect.y , mouseY: e.touches[0].clientY - rect.y })
       }
       ctx.strokeStyle = paintBrush.color;
       ctx.lineWidth = paintBrush.width;
@@ -212,7 +219,6 @@ state = {
   }
   
   setMouseCordinates = e => {
-    const { showModal } = this.state;
     const canvas = this.refs.canvas;
     let canvasXbounding = canvas.getBoundingClientRect().x;
     let canvasYbounding = canvas.getBoundingClientRect().y;
@@ -232,25 +238,43 @@ state = {
   
   
   uploadMainImg = () => {
-    const { mouseX, mouseY, uploadedImage, imageState, activeImageState } = this.state;
+    const { uploadedImage, imageState, activeImageState, mainImgWidth, mainImgHeight } = this.state;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
     const logoSvg = new Image();
-    
+    ctx.clearRect(0,0, canvas.width, canvas.height)
     const mainImg = this.refs.mainImg;
-    
     logoSvg.onload = () => {
-      ctx.drawImage(logoSvg, 0, 0, 500, 500);
-      // FOR IMAGES WHERE YOU WANT TO DETERMINE THE POSITION YOURSELF LIKE STICKERS ETC...
-      //ctx.drawImage(logoSvg, mouseX - (logoSvg.width / 2), mouseY - (logoSvg.height / 2));
-      let pixelsOriginal = ctx.getImageData(0, 0, 500, 500);
+      if(logoSvg.height > logoSvg.width) {
+        const width = canvas.height / 1.91;
+        const height = width * 1.91
+       // canvas.width = width;
+      // canvas.height = height;
+        ctx.drawImage(logoSvg, canvas.width / 4,0, width, height)
+        console.log(width, height)
+        this.setState({mainImgWidth: width, mainImgHeight: height})
+      } else if (logoSvg.width > logoSvg.height) {
+        const width = canvas.width;
+        const height = canvas.height  - (canvas.height / 4)
+      // canvas.width = width;
+      //  canvas.height = height;
+        this.setState({mainImgWidth: width, mainImgHeight: height})
+        ctx.drawImage(logoSvg, 0, canvas.height / 8, width, height)
+      }
+      
+      
+      
+      // IDEA ROTATE CANVAS IF IMG HEIGHT > WIDTH 
+      console.log(logoSvg.width)
+      console.log(logoSvg)
+      let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
     this.setState({originalPhoto: pixelsOriginal, imageState:imageState.concat(pixelsOriginal), activeImageState: activeImageState + 1})
     }
+    
     
     logoSvg.src = uploadedImage;
     
     this.setState({mainImgWidth: mainImg.width, mainImgHeight: mainImg.height})
-    
 }
 
 selectSticker = (sticker) => {
@@ -259,21 +283,22 @@ selectSticker = (sticker) => {
 //FOR SAVING THE IMAGE
 saveImage = () => {
 const canvas = this.refs.canvas;
-const ctx = canvas.getContext('2d');
 
-const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
 var link = document.createElement('a');
 link.className = "modalSave"
 const image = document.createElement('img');
 //const test = document.createElement('p');
-image.src = canvas.toDataURL();
+const trimmedCanvas = trimCanvas(canvas);
+image.src = trimmedCanvas.toDataURL();
+console.log(image.height)
 link.innerHTML = 'download image';
 console.log(this.state.imageState)
 //test.innerText = 'test'
 link.appendChild(image)
-console.log(image)
+console.log(trimmedCanvas.height )
+link.style.height = `${trimmedCanvas.height + 30}px`
 link.addEventListener('click', function(ev) {
-link.href = canvas.toDataURL();
+link.href = trimmedCanvas.toDataURL();
 link.download = `FilterMatic${new Date().toISOString()}.png`
 link.remove();
 }, false);
@@ -319,9 +344,8 @@ addImg = () => {
     logoSvg.onload = () => {
       //ctx.drawImage(logoSvg, mouseX - 86, mouseY, 200, 200);
       // FOR IMAGES WHERE YOU WANT TO DETERMINE THE POSITION YOURSELF LIKE STICKERS ETC...
-      let rect = canvas.getBoundingClientRect();
       ctx.drawImage(logoSvg, mouseX - canvasXbounding - (selectedSticker.width * size) / 2, mouseY - canvasYbounding - (selectedSticker.height * size) / 2, selectedSticker.width * size , selectedSticker.height * size);
-      let pixelsOriginal = ctx.getImageData(0, 0, 500, 500);
+      let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
       this.setState({originalPhoto: pixelsOriginal, imageState:imageState.concat(pixelsOriginal), activeImageState: activeImageState + 1})
     }
 
@@ -335,19 +359,19 @@ addImg = () => {
     const ctx = canvas.getContext('2d');
    // let pixelsOriginal = ctx.getImageData(0, 0, 500, 500);
     //this.setState({originalPhoto: pixelsOriginal})
-    let pixels = ctx.getImageData(0, 0, 500, 500);
+    
+    let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
     console.log(pixels)
     
-
-    const { selectedFilter, originalPhoto, imageState, activeImageState, text } = this.state;
+    const { selectedFilter, originalPhoto, imageState, activeImageState } = this.state;
     // pixels = rgbSplit(pixels);
-      for (let i = 0; i < pixels.data.length; i+=4) {
-        pixels.data[i + 0] = pixels.data[i + 0] + selectedFilter.r; // RED
-        pixels.data[i + 1] = pixels.data[i + 1] + selectedFilter.g; // GREEN
-        pixels.data[i + 2] = pixels.data[i + 2] + selectedFilter.b; // Blue
-        // TRY ADDING AN ALPHA HERE E.g [i + 4]
-      }
-
+    for (let i = 0; i < pixels.data.length; i+=4) {
+      pixels.data[i + 0] = pixels.data[i + 0] + selectedFilter.r; // RED
+      pixels.data[i + 1] = pixels.data[i + 1] + selectedFilter.g; // GREEN
+      pixels.data[i + 2] = pixels.data[i + 2] + selectedFilter.b; // Blue
+      // TRY ADDING AN ALPHA HERE E.g [i + 4]
+    }
+    
     if(selectedFilter.title === 'No Filter') {
       ctx.putImageData(originalPhoto, 0, 0)
       console.log(originalPhoto)
@@ -355,9 +379,12 @@ addImg = () => {
       ctx.putImageData(pixels, 0, 0);
     }
     
-    this.setState({ imageState: imageState.concat(pixels), activeImageState: activeImageState + 1 })
+    let pixelsAfterFilter = ctx.getImageData(0, 0, canvas.width, canvas.height);
     //ctx.globalAlpha = 0.1;
     //return pixels;
+    if(imageState.length === activeImageState + 1) {
+      this.setState({ imageState: imageState.concat(pixelsAfterFilter), activeImageState: activeImageState + 1 })
+    }
     
   }
 
@@ -368,15 +395,21 @@ addImg = () => {
   adjustBrightness = (e) => {
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
-    let pixels = ctx.getImageData(0, 0, 500, 500);
-
+    let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    
     if(e.target.className === 'add') {
       for (let i = 0; i < pixels.data.length; i+=4) {
-        pixels.data[i + 0] = pixels.data[i + 0] + 10; // RED
+       /* pixels.data[i + 0] = pixels.data[i + 0] + 10; // RED
         pixels.data[i + 1] = pixels.data[i + 1] + 10; // GREEN
         pixels.data[i + 2] = pixels.data[i + 2] + 10; // Blue
-       // pixels.data[i + 3] = pixels.data[i + 3] + 10;
-      }
+        // pixels.data[i + 3] = pixels.data[i + 3] + 10; */
+
+       /* 
+        // RGB SPLIT FILTER TESTING
+        pixels.data[i - 100] = pixels.data[i + 0] + 100;
+        pixels.data[i + 100] = pixels.data[i + 1] + 100;
+        pixels.data[i - 100] = pixels.data[i + 2] + 100; */
+      } 
       console.log(pixels.data[0])
     } else {
       for (let i = 0; i < pixels.data.length; i+=4) {
@@ -385,12 +418,12 @@ addImg = () => {
         pixels.data[i + 2] = pixels.data[i + 2] - 10; // Blue
       }
     }
-
+    
     ctx.putImageData(pixels, 0, 0);
     const { imageState, activeImageState } = this.state;
     this.setState({imageState: imageState.concat(pixels), activeImageState: activeImageState + 1})
   }
-
+  
   undoRedo = (e) => {
     const { imageState, activeImageState } = this.state;
 
@@ -401,8 +434,11 @@ addImg = () => {
       if(activeImageState === 0) return;
       this.setState({activeImageState: activeImageState - 1})
       ctx.putImageData(imageState[activeImageState - 1], 0, 0);
+      if(imageState.length === activeImageState + 2) {
+        this.setState({ imageState: imageState.slice(0, imageState.length - 1)})
+      }
     } else {
-      if(activeImageState === imageState.length) return
+      if(activeImageState + 1 === imageState.length) return
       this.setState({activeImageState: activeImageState + 1})
       ctx.putImageData(imageState[activeImageState + 1], 0, 0);
     }
@@ -413,14 +449,14 @@ addImg = () => {
   } 
 
   render() {
-    const { uploadedImage, selectedSticker, stickerSize, selectedFilter, showModal, paintBrush, showTextForm, top, bottom, middle } = this.state;
+    const { uploadedImage, selectedSticker, stickerSize, selectedFilter, showModal, paintBrush, showTextForm, top, bottom, middle, mainImgHeight, mainImgWidth } = this.state;
     return (
       <div className="App">
         <div className="topPart">
           <StickerContainer selectSticker={this.selectSticker} selectStickerSize={this.selectStickerSize} selectedSticker={selectedSticker} stickerSize={stickerSize} secondaryClassname="forDesktop"/>
           <Modal showModal={showModal} />
           <PaintBrush togglePaintMode={this.togglePaintMode} setPaintBrushSettings={this.setPaintBrushSettings} paintBrush={paintBrush}  textSettings={this.textSettings} showTextForm={showTextForm} top={top} bottom={bottom} middle={middle} addText={this.addText} secondaryClassname="forDesktop" />
-         <canvas ref="canvas" width="500" height="500" onMouseEnter={this.handleMouseEnter} onMouseDown={this.togglePaintMode} onMouseUp={this.togglePaintMode} onMouseMove={this.paint} onClick={this.setMouseCordinates} className="canvas" onTouchStart={this.togglePaintMode} onTouchMove={this.paint}  onTouchEnd={this.togglePaintMode} onTouch={this.setMouseCordinates}></canvas>
+         <canvas ref="canvas" width="500" height="500" onMouseEnter={this.handleMouseEnter} onMouseDown={this.togglePaintMode} onMouseUp={this.togglePaintMode} onMouseMove={this.paint} onClick={this.setMouseCordinates}  onTouchStart={this.togglePaintMode} onTouchMove={this.paint}  onTouchEnd={this.togglePaintMode} onTouch={this.setMouseCordinates} className="canvas"></canvas>
          <FilterContainer selectFilter={this.selectFilter} selectedFilter={selectedFilter} secondaryClassname="forDesktop"/>
          </div>
          <Buttons 
@@ -447,7 +483,6 @@ addImg = () => {
           adjustBrightness={this.adjustBrightness}
           undoRedo={this.undoRedo} 
           saveImage={this.saveImage} 
-          saveImage={this.saveImage}
           setPaintBrushSettings={this.setPaintBrushSettings} 
           paintBrush={paintBrush}
           textSettings={this.textSettings} 

@@ -2,14 +2,14 @@ export const filters = [
     {
         title: 'lightBlue',
         r: 0,
-        g: 33,
-        b: 75.5
+        g: 13,
+        b: 55.5
     },
     {
         title: 'Brilliant Lavander',
-        r: 46,
-        g: 4,
-        b: 55
+        r: 26,
+        g: -16,
+        b: 35
     }, 
     {
         title: 'Camouflage Green',
@@ -25,21 +25,21 @@ export const filters = [
     },
     {
         title: 'Amber',
-        r: 55,
-        g: -9,
-        b: -200
+        r: 25,
+        g: -29,
+        b: -50
     },
     {
         title: 'Alien',
-        r: -68,
-        g: 22,
-        b: -198
+        r: -28,
+        g: 2,
+        b: -58
     },
     {
         title: 'Cool Green',
-        r: -21,
-        g: 135,
-        b: 34
+        r: -91,
+        g: 15,
+        b: -36
     },
     {
         title: 'Snow',
@@ -51,24 +51,24 @@ export const filters = [
         title: 'Sky Blue',
         r: -65,
         g: 6,
-        b: 35
+        b: 15
     },
     {
         title: 'Lime',
-        r: -150,
+        r: -50,
         g: 5,
-        b: -150
+        b: -50
     },
     {
         title: 'Hot Pink',
-        r: 55,
-        g: -95,
-        b: -20
+        r: 25,
+        g: -25,
+        b: 0
     },
     {
         title: 'Turquoise',
-        r: -200,
-        g: 6,
-        b: 9 
+        r: -100,
+        g: 16,
+        b: 19 
     }
 ]

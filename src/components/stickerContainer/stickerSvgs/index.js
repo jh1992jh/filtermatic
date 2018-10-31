@@ -11,6 +11,8 @@ import lol from './lol.svg';
 import zzz from './zzz.svg';
 import awesome from './awesome.svg';
 import cool from './cool.svg';
+import exclamation from './exclamation.svg';
+import question from './question.svg';
 
 
 
@@ -67,6 +69,18 @@ export const stickers = [
         src: cool,
         height: 67,
         width: 98
+    },
+    {
+        title: 'exclamation',
+        src: exclamation,
+        height: 67,
+        width: 15
+    },
+    {
+        title: 'question',
+        src: question,
+        height: 67,
+        width: 31
     },
     // EMOJI STICKERS
     {

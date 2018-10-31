@@ -16,7 +16,7 @@ class PaintBrush extends Component {
       {/*  <button onClick={togglePaintMode}>Paint</button> */}
       <button className="textButton" onClick={textSettings}>T</button>
       <input type="range" name="width" min="3" max="100" value={paintBrush.width} step="1" className="strokeWidth" onChange={setPaintBrushSettings} />
-        <input type="color" name="color" value={paintBrush.color}  onChange={setPaintBrushSettings} />
+        <input type="color" name="color" value={paintBrush.color}  onChange={setPaintBrushSettings} className="strokeColor" />
       </div>
     )
   }
