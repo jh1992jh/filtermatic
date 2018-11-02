@@ -28,7 +28,8 @@ state = {
   showTextForm: false,
   top: '',
   middle: '',
-  bottom: ''
+  bottom: '',
+  mobile: null
 
 }
  componentDidMount() {
@@ -45,6 +46,17 @@ state = {
    let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
    const { imageState } = this.state;
    this.setState({imageState: imageState.concat(pixelsOriginal)})
+   function isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+};
+
+if(isMobileDevice() === true) {
+  console.log('User is on a mobile device')
+  this.setState({mobile: true});
+  canvas.width = window.innerWidth;
+}
+
+console.log(window.innerWidth)
   }
   
   imageUploadHandler = e => {
@@ -197,7 +209,8 @@ state = {
       } else {
         console.log(e.touches[0])
         console.log(rect)
-        this.setState({mouseX: e.touches[0].clientX + rect.y , mouseY: e.touches[0].clientY - rect.y })
+       
+        this.setState({mouseX: e.touches[0].clientX, mouseY: e.touches[0].clientY - rect.y })
       }
       ctx.strokeStyle = paintBrush.color;
       ctx.lineWidth = paintBrush.width;
@@ -206,7 +219,8 @@ state = {
       ctx.beginPath();
       if(e.touches) {
         ctx.moveTo(mouseX, mouseY);
-        ctx.lineTo(e.touches[0].clientX + rect.y, e.touches[0].clientY - rect.y)
+        ctx.lineTo(e.touches[0].clientX, e.touches[0].clientY - rect.y)
+        console.log(ctx.canvas)
       } else {
         ctx.moveTo(mouseX, mouseY);
       ctx.lineTo(mouseXposition, mouseYposition );
@@ -238,7 +252,7 @@ state = {
   
   
   uploadMainImg = () => {
-    const { uploadedImage, imageState, activeImageState, mainImgWidth, mainImgHeight } = this.state;
+    const { uploadedImage, imageState, activeImageState } = this.state;
     const canvas = this.refs.canvas;
     const ctx = canvas.getContext('2d');
     const logoSvg = new Image();
@@ -246,11 +260,11 @@ state = {
     const mainImg = this.refs.mainImg;
     logoSvg.onload = () => {
       if(logoSvg.height > logoSvg.width) {
-        const width = canvas.height / 1.91;
-        const height = width * 1.91
+        const width = canvas.width - (canvas.height / 5);
+        const height = canvas.height
        // canvas.width = width;
       // canvas.height = height;
-        ctx.drawImage(logoSvg, canvas.width / 4,0, width, height)
+        ctx.drawImage(logoSvg, canvas.width / 10,0, width, height)
         console.log(width, height)
         this.setState({mainImgWidth: width, mainImgHeight: height})
       } else if (logoSvg.width > logoSvg.height) {
@@ -310,10 +324,10 @@ selectStickerSize = e => {
   this.setState({stickerSize: e.target.value })
 }
 
-addImg = () => {
+addImg = (e) => {
 
   // IDEA HOW REMOVING A STICKER MIGHT WORK, BEFORE EACH STICKER ADD SAVE THE IMAGE DATA TimPREVIMAGESTATE, MAKE IT AN ARRAY THEN THE REMOVE FUNCTION JUST DELETES ONE OBJECT FRim PREVIMAGESTATE(array of objects) FILTERING AND RETURNING THE NEW ARRAY WHICH DOESEN'T HAVE THE STICKER
-  const { mouseX, mouseY, selectedSticker, stickerSize, imageState, activeImageState } = this.state;
+  const { mouseX, mouseY, selectedSticker, stickerSize, imageState, activeImageState, mobile } = this.state;
   const canvas = this.refs.canvas;
   const ctx = canvas.getContext('2d');
     const logoSvg = new Image();
@@ -342,16 +356,22 @@ addImg = () => {
     }
     
     logoSvg.onload = () => {
+      let rect = canvas.getBoundingClientRect();
       //ctx.drawImage(logoSvg, mouseX - 86, mouseY, 200, 200);
       // FOR IMAGES WHERE YOU WANT TO DETERMINE THE POSITION YOURSELF LIKE STICKERS ETC...
-      ctx.drawImage(logoSvg, mouseX - canvasXbounding - (selectedSticker.width * size) / 2, mouseY - canvasYbounding - (selectedSticker.height * size) / 2, selectedSticker.width * size , selectedSticker.height * size);
-      let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.setState({originalPhoto: pixelsOriginal, imageState:imageState.concat(pixelsOriginal), activeImageState: activeImageState + 1})
+      if(mobile) {
+        ctx.drawImage(logoSvg, mouseX - rect.y - (selectedSticker.width * size) / 2, mouseY - canvasYbounding - (selectedSticker.height * size) / 2, selectedSticker.width * size , selectedSticker.height * size );
+      } else {
+        ctx.drawImage(logoSvg, mouseX - canvasXbounding - (selectedSticker.width * size) / 2, mouseY - canvasYbounding - (selectedSticker.height * size) / 2, selectedSticker.width * size , selectedSticker.height * size );
+      }
+      console.log(e)
     }
-
+    
+    let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    this.setState({originalPhoto: pixelsOriginal, imageState:imageState.concat(pixelsOriginal), activeImageState: activeImageState + 1})
     
     logoSvg.src = selectedSticker.src;
-    console.log(canvas.getBoundingClientRect().x)
+    console.log(canvas, ctx)
   }
   
   filter = () => {
@@ -449,7 +469,7 @@ addImg = () => {
   } 
 
   render() {
-    const { uploadedImage, selectedSticker, stickerSize, selectedFilter, showModal, paintBrush, showTextForm, top, bottom, middle, mainImgHeight, mainImgWidth } = this.state;
+    const { uploadedImage, selectedSticker, stickerSize, selectedFilter, showModal, paintBrush, showTextForm, top, bottom, middle } = this.state;
     return (
       <div className="App">
         <div className="topPart">

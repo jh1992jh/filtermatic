@@ -43,13 +43,17 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
     border: 1px solid #E5D4ED;
     box-shadow: $mainBoxShadow;
-    
+    width: 500px;
+    height: 500px;
 
     @media only screen and (min-width: 300px) and (max-width: 800px) {
-        max-width: 100%;
+        max-width: 100% !important;
         max-height: auto;
         border: none;
-        
+        margin: auto;
+        /*position: absolute;
+        left: 2.5em;
+        top: 0;*/
 
     }
 }
@@ -187,6 +191,7 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     
     @media only screen and (min-width: 300px) and (max-width: 800px) {
         max-height: 300px !important;
+        margin: 0;
         .filters {
             max-height: 300px !important;
         }
@@ -232,6 +237,7 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
     @media only screen and (min-width: 300px) and (max-width: 800px) {
         max-height: 300px !important;
+        margin: 0;
         .stickers {
             max-height: 300px !important;
         }
@@ -371,7 +377,7 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         background: $coolBlue;
         border: none;
         color: $mainFontColor;
-        margin: 1em;
+        margin: 0.8em;
     }
 
     .stickerContainer,
