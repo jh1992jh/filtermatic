@@ -43,20 +43,20 @@ export const stickers = [
     {
         title: 'teehee',
         src: teehee,
-        height: 80,
-        width: 200
+        height: 40,
+        width: 100
     },
     {
         title: 'lol',
         src: lol,
-        height: 80,
-        width: 200
+        height: 40,
+        width: 100
     },
     {
         title: 'zzz',
         src: zzz,
-        height: 80,
-        width: 200
+        height: 40,
+        width: 100
     },
     {
         title: 'awesome',

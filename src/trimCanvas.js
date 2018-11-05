@@ -1,6 +1,6 @@
 export const trimCanvas = (c) => 
 {
-console.log(c)
+
 var ctx = c.getContext('2d'),
 copy = document.createElement('canvas').getContext('2d'),
 pixels = ctx.getImageData(0, 0, c.width, c.height),
@@ -55,6 +55,6 @@ copy.canvas.height = trimHeight;
 copy.putImageData(trimmed, 0, 0);
 
 // Return trimmed canvas
-console.log(copy.canvas)
+
 return copy.canvas;
 }

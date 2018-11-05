@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 class PaintBrush extends Component {
   render() {
-      const { togglePaintMode, setPaintBrushSettings, paintBrush, showTextForm, top, bottom, middle, textSettings, addText, secondaryClassname } = this.props;
+      const { setPaintBrushSettings, paintBrush, showTextForm, top, bottom, middle, textSettings, addText, secondaryClassname } = this.props;
     return (
       <div className={`paintBrush ${secondaryClassname}`}>
       {showTextForm ? (
