@@ -16,6 +16,10 @@ $containerBackground: #eee;
 $coolBlue: #00a6fb;
 $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
+body {
+    overscroll-behavior: contain;
+  }
+
 .App {
     height: 100vh;
     width: 100vw;
@@ -203,6 +207,10 @@ $mainBoxShadow:  0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
         margin: 0;
         .filters {
             max-height: 300px !important;
+        }
+
+        .infoAndSelectors {
+            max-width: 100%;
         }
     }
 }

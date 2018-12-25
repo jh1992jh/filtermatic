@@ -37,7 +37,7 @@ state = {
  componentDidMount() {
    const canvas = this.refs.canvas;
    const ctx = canvas.getContext('2d');
-   const { mobile } = this.state;
+   const { mobile, imageState, selectedSticker } = this.state;
   
    
    function isMobileDevice() {
@@ -74,10 +74,9 @@ const canvasPosY = canvas.getBoundingClientRect().y;
 const canvasPosX = canvas.getBoundingClientRect().x;
 
 let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
-const { imageState } = this.state;
 this.setState({imageState: imageState.concat(pixelsOriginal)})
 
-this.setState({mouseX: canvasPosX + 50, mouseY: canvasPosY + 50});
+this.setState({mouseX: canvasPosX + canvas.width / 2 - selectedSticker.width / 2 , mouseY: canvasPosY + canvas.height / 2 - selectedSticker.width / 2 });
   }
   
   imageUploadHandler = e => {
@@ -173,7 +172,7 @@ this.setState({mouseX: canvasPosX + 50, mouseY: canvasPosY + 50});
     const centerX = canvas.width / 2;
     const topY = canvas.height * 0.1 + orientationNumber;
     const centerY = canvas.height * 0.5 + (orientationNumber / 2);
-    const bottomY = canvas.height * 0.9 - (orientationNumber / 2);
+    const bottomY = canvas.height * 0.9 - (orientationNumber / 2) - 30;
 
     ctx.font = "50px Impact";
     ctx.textAlign = "center";
