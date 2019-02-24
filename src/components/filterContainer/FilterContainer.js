@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { selectFilter } from '../../actions/filterActions';
+
 import { filters } from './';
 
 class FilterContainer extends Component {
   render() {
-      const { selectFilter, selectedFilter, secondaryClassname} = this.props;
+      const { selectFilter, secondaryClassname} = this.props;
+      const { selectedFilter } = this.props.filters;
       let outputFilters = filters.map(filter => (
         <div 
         key={filter.title} 
@@ -23,4 +28,8 @@ class FilterContainer extends Component {
   }
 }
 
-export default FilterContainer;
+const mapStateToProps = state => ({
+  filters: state.filters
+})
+
+export default connect(mapStateToProps ,{ selectFilter })(FilterContainer);

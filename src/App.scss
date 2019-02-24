@@ -54,14 +54,17 @@ body {
     border: 1px solid #E5D4ED;
     box-shadow: $mainBoxShadow;
     overflow: hidden;
+    position: absolute;
+    left: calc(50% - 250px);
+    z-index: 0;
     
     @media only screen and (min-width: 300px) and (max-width: 800px) {
         max-width: 100% !important;
         max-height: auto;
         border: none;
         margin: auto;
-        position: absolute;
-        top: 0;
+        position: absolute !important;
+        
         left: 0;
         overflow: hidden;
         /*position: absolute;
