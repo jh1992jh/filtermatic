@@ -164,26 +164,6 @@ state = {
 
 
   }
-  
-  undoRedo = (e) => {
-    const { imageState, activeImageState } = this.state;
-
-    const canvas = this.refs.canvas;
-    const ctx = canvas.getContext('2d');
-
-    if(e.target.className === 'undo')  {
-      if(activeImageState === 0) return;
-      this.setState({activeImageState: activeImageState - 1})
-      ctx.putImageData(imageState[activeImageState - 1], 0, 0);
-      if(imageState.length === activeImageState + 2) {
-        this.setState({ imageState: imageState.slice(0, imageState.length - 1)})
-      }
-    } else {
-      if(activeImageState + 1 === imageState.length) return
-      this.setState({activeImageState: activeImageState + 1})
-      ctx.putImageData(imageState[activeImageState + 1], 0, 0);
-    }
-  } 
 
   render() {
     const { uploadedImage, paintBrush, showTextForm, top, bottom, middle, mobile, mouseX, mouseY, canvasXbounding, canvasYbounding, canvasRightBounding, canvasBottomBounding } = this.state;

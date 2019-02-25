@@ -79,7 +79,7 @@ class StickerComp extends Component {
 
   return (
     <div>
-        <img key={sticker.id} src={sticker.src} alt="sticker" style={{position: 'absolute', width: `${sticker.width * sticker.size}px`, height: `${sticker.height * sticker.size}px`,  top: `${cordinatesY}px`, left: `${cordinatesX}px`, zIndex: '1050', border: `${dragging ? '1px solid red' : '1px solid black'}`}} id={sticker.id}  onClick={this.toggleDrag} onMouseMove={this.dragSticker} onMouseLeave={this.saveNewCordinates} onDoubleClick={() => deleteSticker(sticker.id)} draggable="true"
+        <img key={sticker.id} src={sticker.src} alt="sticker" style={{position: 'absolute', width: `${sticker.width * sticker.size}px`, height: `${sticker.height * sticker.size}px`,  top: `${cordinatesY}px`, left: `${cordinatesX}px`, zIndex: '1050', border: `${dragging ? '1px solid red' : 'none'}`}} id={sticker.id}  onClick={this.toggleDrag} onMouseMove={this.dragSticker} onMouseLeave={this.saveNewCordinates} onDoubleClick={() => deleteSticker(sticker.id)} draggable="true"
         onTouchMove={this.dragSticker} onTouchEnd={this.saveNewCordinates}/>
     </div>
   )

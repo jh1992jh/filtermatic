@@ -1,5 +1,6 @@
 import { TOGGLE_PAINT, CHANGE_BRUSH_WIDTH, CHANGE_BRUSH_COLOR } from './types';
-
+import { saveImageState } from './canvasActions';
+ 
 export const changeBrushWidth = width => dispatch => {
     dispatch({
         type: CHANGE_BRUSH_WIDTH,
@@ -15,9 +16,13 @@ export const changeBrushColor = color => dispatch => {
 }
 
 export const togglePaintMode = () => dispatch => {
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext('2d');
+    let pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);
     dispatch({
         type: TOGGLE_PAINT
     })
+    dispatch(saveImageState(pixels));
 }
 
 export const applyPaint = paintData => () => {
