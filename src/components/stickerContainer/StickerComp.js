@@ -45,10 +45,10 @@ class StickerComp extends Component {
                 this.setState({cordinatesY: canvasBottomBounding - (sticker.height * 2)})
             }
 
-            
             else {
                 this.setState({cordinatesX: e.touches[0].clientX - sticker.width / 2, cordinatesY: e.touches[0].clientY - sticker.height / 2});
             }
+            console.log("stickerY: " + (e.touches[0].clientY - sticker.height) + " canvasYbounding: ");
         }
 
     }

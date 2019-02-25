@@ -21,11 +21,15 @@ export const uploadMainImg = data => dispatch => {
 
     
     let logoSVG = new Image();
+    const mainImg = document.getElementById('mainImg');
+    console.log(mainImg.height)
+    if(logoSVG.height > 500) {
+        logoSVG.height = 500;
+    }
     
 
 
         logoSVG.onload = () => {
-            const mainImg = document.getElementById('mainImg');
             const ctx = canvas.getContext('2d');
             let aspectRatio;
               /*const width = canvas.width;
@@ -39,6 +43,10 @@ export const uploadMainImg = data => dispatch => {
                 const height = canvas.width * aspectRatio;
                 canvas.width = width;
                 canvas.height = height;
+                if(canvas.height > 500) {
+                    canvas.height = 500;
+                    console.log(canvas.height);
+                }
                 ctx.drawImage(logoSVG, 0,0, width, height)
               } else if (logoSVG.width > logoSVG.height) {
                 aspectRatio = mainImg.width / mainImg.height; 
@@ -52,6 +60,7 @@ export const uploadMainImg = data => dispatch => {
               }
             }
        
+           
        logoSVG.src = data.imageData;
            
 
@@ -77,7 +86,7 @@ export const saveImage = (stickers) => () => {
     logoSvg.onload = () => {
      
          
-            ctx.drawImage(logoSvg, addedStickers[i].x - canvasXbounding - (addedStickers[i].width / 2), addedStickers[i].y - canvasYbounding - (addedStickers[i].height / 2), addedStickers[i].width * addedStickers[i].size , addedStickers[i].height * addedStickers[i].size);
+            ctx.drawImage(logoSvg, addedStickers[i].x - canvasXbounding, addedStickers[i].y - canvasYbounding, addedStickers[i].width * addedStickers[i].size , addedStickers[i].height * addedStickers[i].size);
    }
   }
 

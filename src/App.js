@@ -51,7 +51,7 @@ state = {
     console.log('User is on a mobile device, adjusting the canvas size')
     this.setState({mobile: true});
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight * 0.8;
   } 
 
   let canvasX = canvas.width / 2;
@@ -178,7 +178,7 @@ state = {
           <div className="topPart">
             <StickerContainer secondaryClassname="forDesktop"/>
             <PaintBrush togglePaintMode={this.togglePaintMode} setPaintBrushSettings={this.setPaintBrushSettings} paintBrush={paintBrush}  textSettings={this.textSettings} showTextForm={showTextForm} top={top} bottom={bottom} middle={middle} addText={this.addText} secondaryClassname="forDesktop" />
-          <canvas ref="canvas" id="canvas" width={mobile ? window.innerWidth : 500} height={mobile ? window.innerHeight : 500} onMouseEnter={this.handleMouseMove} onMouseDown={this.props.togglePaintMode}  onMouseUp={this.props.togglePaintMode} /*onMouseMove={this.paint}*/ onMouseMove={this.handleMouseMove} onClick={this.setMouseCordinates}  onTouchEnd={this.props.togglePaintMode} onTouchStart={this.togglePaintMobile} onTouchMove={this.handleTouchPaint} className="canvas"></canvas>
+          <canvas ref="canvas" id="canvas" width={mobile ? window.innerWidth : 500} height={mobile ? window.innerHeight * 0.8 : 500} onMouseEnter={this.handleMouseMove} onMouseDown={this.props.togglePaintMode}  onMouseUp={this.props.togglePaintMode} /*onMouseMove={this.paint}*/ onMouseMove={this.handleMouseMove} onClick={this.setMouseCordinates}  onTouchEnd={this.props.togglePaintMode} onTouchStart={this.togglePaintMobile} onTouchMove={this.handleTouchPaint} className="canvas"></canvas>
           {addedStickers.length > 0 && addedStickers !== undefined ? addedStickers.map(sticker => (
             <StickerComp sticker={sticker} mouseX={mouseX} mouseY={mouseY} canvasXbounding={canvasXbounding} canvasYbounding={canvasYbounding} canvasRightBounding={canvasRightBounding} canvasBottomBounding={canvasBottomBounding}/>
           )): null }
