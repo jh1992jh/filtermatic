@@ -12,12 +12,11 @@ const initialState = {
 export default function canvasReducer(state = initialState, action) {
     switch(action.type) {
         case HANDLE_MOUSE_MOVE: 
-            console.log(action.payload)
+           
             return {
                 ...state
             }
         case SET_CANVAS_REF: 
-        console.log(action.payload);
             return {
                 ...state,
                 canvasRef: action.payload,

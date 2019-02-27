@@ -13,6 +13,8 @@ class StickerComp extends Component {
         const { sticker, canvasXbounding, canvasYbounding, canvasRightBounding, canvasBottomBounding } = this.props;
         const { dragging } = this.state;
         
+        
+  
 
         if(dragging) {
         
@@ -34,7 +36,14 @@ class StickerComp extends Component {
             
         }
 
+        
         if(e.touches) {
+            const canvas = document.getElementById("canvas");
+            let canvasXbounding = canvas.getBoundingClientRect().x;
+            let canvasYbounding = canvas.getBoundingClientRect().y;
+            let canvasRightBounding = canvas.getBoundingClientRect().right;
+            let canvasBottomBounding = canvas.getBoundingClientRect().bottom;
+
             if(e.touches[0].clientX - sticker.width < canvasXbounding) {
                 this.setState({cordinatesX: canvasXbounding});
             } else if(e.touches[0].clientX + sticker.width > canvasRightBounding) {
@@ -48,7 +57,7 @@ class StickerComp extends Component {
             else {
                 this.setState({cordinatesX: e.touches[0].clientX - sticker.width / 2, cordinatesY: e.touches[0].clientY - sticker.height / 2});
             }
-            console.log("stickerY: " + (e.touches[0].clientY - sticker.height) + " canvasYbounding: ");
+            
         }
 
     }

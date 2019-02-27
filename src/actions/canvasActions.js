@@ -22,7 +22,7 @@ export const uploadMainImg = data => dispatch => {
     
     let logoSVG = new Image();
     const mainImg = document.getElementById('mainImg');
-    console.log(mainImg.height)
+    
     if(logoSVG.height > 500) {
         logoSVG.height = 500;
     }
@@ -45,7 +45,7 @@ export const uploadMainImg = data => dispatch => {
                 canvas.height = height;
                 if(canvas.height > 500) {
                     canvas.height = 500;
-                    console.log(canvas.height);
+                    
                 }
                 ctx.drawImage(logoSVG, 0,0, width, height)
               } else if (logoSVG.width > logoSVG.height) {

@@ -22,6 +22,8 @@ state = {
   canvasYbounding: null,
   canvasRightBounding: null,
   canvasBottomBounding: null,
+  mobileWindowHeight: null,
+  mobileWindowWidth: null,
   uploadedImage: null,
   orientationNumber: 0,
   originalPhoto: null,
@@ -37,8 +39,6 @@ state = {
   let canvasYbounding = canvas.getBoundingClientRect().y;
   let canvasRightBounding = canvas.getBoundingClientRect().right;
   let canvasBottomBounding = canvas.getBoundingClientRect().bottom;
-
-  this.setState({mouseX: canvasXbounding + (canvas.width / 2), mouseY: canvasYbounding + (canvas.height / 2), canvasXbounding: canvasXbounding, canvasYbounding: canvasYbounding, canvasRightBounding: canvasRightBounding, canvasBottomBounding: canvasBottomBounding})
    
    const { mobile } = this.state;
   
@@ -49,10 +49,12 @@ state = {
 
   if(isMobileDevice() === true) {
     console.log('User is on a mobile device, adjusting the canvas size')
-    this.setState({mobile: true});
+    this.setState({mobile: true, mobileWindowHeight: window.innerHeight * 0.8, mobileWindowWidth: window.innerWidth});
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight * 0.8;
   } 
+
+   this.setState({mouseX: canvasXbounding + (canvas.width / 2), mouseY: canvasYbounding + (canvas.height / 2), canvasXbounding: canvasXbounding, canvasYbounding: canvasYbounding, canvasRightBounding: canvasRightBounding, canvasBottomBounding: canvasBottomBounding})
 
   let canvasX = canvas.width / 2;
   let canvasY = canvas.height / 2;
@@ -166,7 +168,7 @@ state = {
   }
 
   render() {
-    const { uploadedImage, paintBrush, showTextForm, top, bottom, middle, mobile, mouseX, mouseY, canvasXbounding, canvasYbounding, canvasRightBounding, canvasBottomBounding } = this.state;
+    const { uploadedImage, paintBrush, showTextForm, top, bottom, middle, mobile, mouseX, mouseY, canvasXbounding, canvasYbounding, canvasRightBounding, canvasBottomBounding, mobileWindowHeight, mobileWindowWidth } = this.state;
     const { addedStickers } = this.props.stickers;
     const canvas = React.createRef()
 
@@ -178,7 +180,7 @@ state = {
           <div className="topPart">
             <StickerContainer secondaryClassname="forDesktop"/>
             <PaintBrush togglePaintMode={this.togglePaintMode} setPaintBrushSettings={this.setPaintBrushSettings} paintBrush={paintBrush}  textSettings={this.textSettings} showTextForm={showTextForm} top={top} bottom={bottom} middle={middle} addText={this.addText} secondaryClassname="forDesktop" />
-          <canvas ref="canvas" id="canvas" width={mobile ? window.innerWidth : 500} height={mobile ? window.innerHeight * 0.8 : 500} onMouseEnter={this.handleMouseMove} onMouseDown={this.props.togglePaintMode}  onMouseUp={this.props.togglePaintMode} /*onMouseMove={this.paint}*/ onMouseMove={this.handleMouseMove} onClick={this.setMouseCordinates}  onTouchEnd={this.props.togglePaintMode} onTouchStart={this.togglePaintMobile} onTouchMove={this.handleTouchPaint} className="canvas"></canvas>
+          <canvas ref="canvas" id="canvas" width={mobile ? mobileWindowWidth : 500} height={mobile ? mobileWindowHeight : 500} onMouseEnter={this.handleMouseMove} onMouseDown={this.props.togglePaintMode}  onMouseUp={this.props.togglePaintMode} /*onMouseMove={this.paint}*/ onMouseMove={this.handleMouseMove} onClick={this.setMouseCordinates}  onTouchEnd={this.props.togglePaintMode} onTouchStart={this.togglePaintMobile} onTouchMove={this.handleTouchPaint} className="canvas"></canvas>
           {addedStickers.length > 0 && addedStickers !== undefined ? addedStickers.map(sticker => (
             <StickerComp sticker={sticker} mouseX={mouseX} mouseY={mouseY} canvasXbounding={canvasXbounding} canvasYbounding={canvasYbounding} canvasRightBounding={canvasRightBounding} canvasBottomBounding={canvasBottomBounding}/>
           )): null }
