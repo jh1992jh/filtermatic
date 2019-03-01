@@ -46,61 +46,61 @@ export const stickers = [
     {
         title: 'teehee',
         src: teehee,
-        height: 40,
-        width: 100
+        height: 26.7,
+        width: 76.7
     },
     {
         title: 'lol',
         src: lol,
-        height: 40,
-        width: 100
+        height: 26.7,
+        width: 76.7
     },
     {
         title: 'zzz',
         src: zzz,
-        height: 40,
-        width: 100
+        height: 26.7,
+        width: 76.7
     },
     {
         title: 'awesome',
         src: awesome,
-        height: 41,
-        width: 158
+        height: 20.5,
+        width: 79
     },
     {
         title: 'cool',
         src: cool,
-        height: 67,
-        width: 98
+        height: 33.5,
+        width: 49
     },
     {
         title: 'exclamation',
         src: exclamation,
-        height: 67,
+        height: 33.5,
         width: 15
     },
     {
         title: 'question',
         src: question,
-        height: 67,
+        height: 33.5,
         width: 31
     },
     {
         title: 'dollar',
         src: dollar,
-        height: 67,
+        height: 33.5,
         width: 31
     },
     {
         title: 'euro',
         src: euro,
-        height: 67,
+        height: 33.5,
         width: 31
     },
     {
         title: 'britishPound',
         src: britishPound,
-        height: 67,
+        height: 33.5,
         width: 31
     },
     // EMOJI STICKERS
