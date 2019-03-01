@@ -51,9 +51,9 @@ class MobileToolbar extends Component {
   async undo () {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    await this.props.decrementActiveImageState();
       try {
-        await this.props.decrementActiveImageState();
-        ctx.putImageData(this.props.canvas.imageState[this.props.canvas.activeImageState - 1], 0, 0);
+        ctx.putImageData(this.props.canvas.imageState[this.props.canvas.activeImageState], 0, 0);
       } catch(err) {
         console.log(err);
       }
@@ -110,19 +110,25 @@ class MobileToolbar extends Component {
            this.props.addSticker(sticker);
          }
          
-    addFilter = () => {
-      const canvas = document.getElementById('canvas');
-      const ctx = canvas.getContext('2d');
+         async addFilter() {
+          const canvas = document.getElementById('canvas');
+          const ctx = canvas.getContext('2d');
 
-      const data = {
-        filter: this.props.filters.selectedFilter,
-        ctx: ctx
-      }
+          let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = {
+            filter: this.props.filters.selectedFilter,
+            ctx: ctx
+          }
+          await this.props.addFilter(data)
+         
+          try {
+            this.props.saveImageState(pixelsOriginal);
+  
 
-      this.props.addFilter(data)
-      let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.props.saveImageState(pixelsOriginal);
-    }
+          } catch(err) {
+            console.log(err);
+          }
+        }
 
     
     saveImage = () => {
@@ -167,7 +173,7 @@ class MobileToolbar extends Component {
         <button onClick={this.toggleMenus} className="showStickers">Stickers</button>
         <button onClick={this.addSticker}>Add Sticker</button>
         <button onClick={this.toggleMenus} className="showFilters">Filters</button>
-        <button onClick={this.addFilter}>Add Filter</button>
+        <button onClick={this.addFilter.bind(this)}>Add Filter</button>
         <label className="fileContainer">
       <img src={icons.camera} alt="camera"/>
       Click to choose an image

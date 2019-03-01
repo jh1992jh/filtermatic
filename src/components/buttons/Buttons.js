@@ -48,18 +48,22 @@ class Buttons extends Component {
      //this.setState({ stickers: stickers.concat(sticker) });
     }
 
-    addFilter = () => {
+    async addFilter() {
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-
+      
+      let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
       const data = {
         filter: this.props.filters.selectedFilter,
         ctx: ctx
       }
-
-      this.props.addFilter(data)
-      let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      this.props.saveImageState(pixelsOriginal);
+      await this.props.addFilter(data)
+     
+      try {
+        this.props.saveImageState(pixelsOriginal);
+      } catch(err) {
+        console.log(err);
+      }
     }
 
     addBrightness = () => {
@@ -93,9 +97,9 @@ class Buttons extends Component {
    async undo () {
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
+    await this.props.decrementActiveImageState();
       try {
-        await this.props.decrementActiveImageState();
-        ctx.putImageData(this.props.canvas.imageState[this.props.canvas.activeImageState - 1], 0, 0);
+        ctx.putImageData(this.props.canvas.imageState[this.props.canvas.activeImageState], 0, 0);
       } catch(err) {
         console.log(err);
       }
@@ -104,8 +108,8 @@ class Buttons extends Component {
     async redo () {
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
+      await this.props.incrementActiveImageState();
         try {
-          await this.props.incrementActiveImageState();
           ctx.putImageData(this.props.canvas.imageState[this.props.canvas.activeImageState - 1], 0, 0);
         } catch(err) {
           console.log(err);
@@ -122,7 +126,7 @@ class Buttons extends Component {
       <button onClick={this.undo.bind(this)} className="undo">Undo</button>
       <button onClick={this.redo.bind(this)} className="redo">Redo</button>
       <button onClick={this.saveImage} ref="save"> <img src={icons.save} alt="save"/> Save</button>
-      <button onClick={this.addFilter}>Filter</button>
+      <button onClick={this.addFilter.bind(this)}>Filter</button>
       <label className="fileContainer">
       <img src={icons.camera} alt="camera"/>
       Click to choose an image

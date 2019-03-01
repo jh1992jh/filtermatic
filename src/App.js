@@ -74,11 +74,14 @@ state = {
       welcomeText(30, canvasX);
     }
   }
+
+  let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      this.props.saveImageState(pixelsOriginal);
 }
   
   imageUploadHandler = e => {
     this.setState({uploadedImage: URL.createObjectURL(e.target.files[0])})
-    setTimeout(() => this.uploadMainImg(), 100) 
+    setTimeout(() => this.uploadMainImg(), 100)     
   }
   
   handleMouseMove = e => {
@@ -154,7 +157,7 @@ state = {
     }
 
     await this.props.uploadMainImg(data);
-   
+  
     try {
       let pixelsOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
       this.props.saveImageState(pixelsOriginal);
@@ -163,7 +166,7 @@ state = {
     }
       
     
-
+  
 
   }
 

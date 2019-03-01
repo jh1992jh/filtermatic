@@ -2,32 +2,32 @@ export const filters = [
     {
         title: 'lightBlue',
         r: 0,
-        g: 13,
-        b: 55.5
+        g: -7,
+        b: 35.5
     },
     {
         title: 'Brilliant Lavander',
-        r: 26,
-        g: -16,
-        b: 35
+        r: 6,
+        g: -36,
+        b: 15
     }, 
     {
         title: 'Camouflage Green',
-        r: 20,
-        g: 34,
-        b: 7
+        r: 0,
+        g: 14,
+        b: -13
     },
     {
         title: 'Azure Mist',
-        r: 40,
-        g: 55,
-        b: 55
+        r: 15,
+        g: 30,
+        b: 30
     },
     {
         title: 'Amber',
-        r: 25,
-        g: -29,
-        b: -50
+        r: 5,
+        g: -49,
+        b: -70
     },
     {
         title: 'Alien',

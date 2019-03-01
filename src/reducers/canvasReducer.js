@@ -23,7 +23,7 @@ export default function canvasReducer(state = initialState, action) {
                 loading: false
             }
         case UPLOAD_MAIN_IMG: 
-        console.log(action.payload)
+
             return {
                 ...state,
                 ctx: action.payload
@@ -50,7 +50,7 @@ export default function canvasReducer(state = initialState, action) {
         case INCREMENT_ACTIVE_IMAGE_STATE:
             return {
                 ...state,
-                activeImageState: state.activeImageState > state.imageState.length - 1 ? state.imageState.length : state.activeImageState + 1
+                activeImageState: state.imageState.length === state.activeImageState ? state.activeImageState : state.activeImageState += 1 
             }            
 
         default: 
