@@ -48,6 +48,11 @@
       "sizes": "192x192"
     },
     {
+      "src": "./images/icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
       "src": "./images/icon-384x384.svg",
       "type": "image/svg+xml",
       "sizes": "384x384"
@@ -58,7 +63,8 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "scope": ".",
+  "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#222222",
   "background_color": "#222222",

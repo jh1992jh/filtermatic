@@ -1,7 +1,7 @@
 {
-  "main.css": "/filtermatic/static/css/main.5baa0194.chunk.css",
-  "main.js": "/filtermatic/static/js/main.0549318d.chunk.js",
-  "main.js.map": "/filtermatic/static/js/main.0549318d.chunk.js.map",
+  "main.css": "/filtermatic/static/css/main.f14b1827.chunk.css",
+  "main.js": "/filtermatic/static/js/main.3c6d69da.chunk.js",
+  "main.js.map": "/filtermatic/static/js/main.3c6d69da.chunk.js.map",
   "static/js/1.a60500e7.chunk.js": "/filtermatic/static/js/1.a60500e7.chunk.js",
   "static/js/1.a60500e7.chunk.js.map": "/filtermatic/static/js/1.a60500e7.chunk.js.map",
   "runtime~main.js": "/filtermatic/static/js/runtime~main.baf69612.js",
@@ -26,8 +26,8 @@
   "static/media/dollar.svg": "/filtermatic/static/media/dollar.0a798ebe.svg",
   "static/media/euro.svg": "/filtermatic/static/media/euro.4758b5c6.svg",
   "static/media/britishPound.svg": "/filtermatic/static/media/britishPound.b897a7a1.svg",
-  "static/css/main.5baa0194.chunk.css.map": "/filtermatic/static/css/main.5baa0194.chunk.css.map",
+  "static/css/main.f14b1827.chunk.css.map": "/filtermatic/static/css/main.f14b1827.chunk.css.map",
   "index.html": "/filtermatic/index.html",
-  "precache-manifest.56c53b1ab477e48940ff6df9a3919766.js": "/filtermatic/precache-manifest.56c53b1ab477e48940ff6df9a3919766.js",
+  "precache-manifest.c4876891e31f9cb48aea0fbf88ef297b.js": "/filtermatic/precache-manifest.c4876891e31f9cb48aea0fbf88ef297b.js",
   "service-worker.js": "/filtermatic/service-worker.js"
 }

@@ -4,8 +4,8 @@ self.__precacheManifest = [
     "url": "/filtermatic/static/media/smirk1PNG.ab9aeb72.svg"
   },
   {
-    "revision": "0549318db9ecb7866c78",
-    "url": "/filtermatic/static/css/main.5baa0194.chunk.css"
+    "revision": "3c6d69daa23d18186eec",
+    "url": "/filtermatic/static/css/main.f14b1827.chunk.css"
   },
   {
     "revision": "a60500e78f044eb48db7",
@@ -48,8 +48,8 @@ self.__precacheManifest = [
     "url": "/filtermatic/static/media/sad1.2adb5c86.svg"
   },
   {
-    "revision": "0549318db9ecb7866c78",
-    "url": "/filtermatic/static/js/main.0549318d.chunk.js"
+    "revision": "3c6d69daa23d18186eec",
+    "url": "/filtermatic/static/js/main.3c6d69da.chunk.js"
   },
   {
     "revision": "7381bf4b870530a565cf54539d29e5f2",
@@ -96,7 +96,7 @@ self.__precacheManifest = [
     "url": "/filtermatic/static/media/britishPound.b897a7a1.svg"
   },
   {
-    "revision": "c6e92af6db6204acdcb339c0847006c3",
+    "revision": "6ad8bc73a27edc0367b91a1fd3d1ece2",
     "url": "/filtermatic/index.html"
   }
 ];
