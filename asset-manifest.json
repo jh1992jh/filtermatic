@@ -1,7 +1,7 @@
 {
   "main.css": "/filtermatic/static/css/main.f14b1827.chunk.css",
-  "main.js": "/filtermatic/static/js/main.ab112b48.chunk.js",
-  "main.js.map": "/filtermatic/static/js/main.ab112b48.chunk.js.map",
+  "main.js": "/filtermatic/static/js/main.edf9212e.chunk.js",
+  "main.js.map": "/filtermatic/static/js/main.edf9212e.chunk.js.map",
   "static/js/1.6e0ba063.chunk.js": "/filtermatic/static/js/1.6e0ba063.chunk.js",
   "static/js/1.6e0ba063.chunk.js.map": "/filtermatic/static/js/1.6e0ba063.chunk.js.map",
   "runtime~main.js": "/filtermatic/static/js/runtime~main.baf69612.js",
@@ -28,6 +28,6 @@
   "static/media/britishPound.svg": "/filtermatic/static/media/britishPound.b897a7a1.svg",
   "static/css/main.f14b1827.chunk.css.map": "/filtermatic/static/css/main.f14b1827.chunk.css.map",
   "index.html": "/filtermatic/index.html",
-  "precache-manifest.cf37e340dcc647f45dd7a14f384362fd.js": "/filtermatic/precache-manifest.cf37e340dcc647f45dd7a14f384362fd.js",
+  "precache-manifest.a6faa722750a916a8f8b1cd744e3af4b.js": "/filtermatic/precache-manifest.a6faa722750a916a8f8b1cd744e3af4b.js",
   "service-worker.js": "/filtermatic/service-worker.js"
 }
